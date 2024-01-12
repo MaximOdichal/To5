@@ -218,19 +218,33 @@ function func11()
 
 function func12()
 {
-    let array = [1, 2, 3, 4, 5, 10, 6, 7, 8 , 9];
-    let max = array[0];
-    for(let i = 0; i < array.length; i++) 
-    {
-        if(max < array[i] && array[i] % 2 === 1) max = array[i];
+    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let maxOdd = -Infinity;
+    let maxOddIndex = -1;
+
+    // Находим наибольший нечетный элемент и его индекс 
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] % 2 !== 0 && arr[i] > maxOdd) {
+        maxOdd = arr[i];
+        maxOddIndex = i;
+        }
     }
-    let array1 = array.slice(0, array.indexOf(max));
-    let array2 = array.slice(array.indexOf(max) + 1, array.length);
 
-    for(let i = 0; i < 3; i++) array1.unshift(array1.pop());
-    array2.push(array2.shift())
-    alert(array1.concat([max]).concat(array2));
+    // Циклический сдвиг влево элементов справа от максимального нечетного элемента
+    for (let i = maxOddIndex + 1; i < arr.length; i++) {
+        const temp = arr[i];
+        arr[i] = arr[i - 1];
+        arr[i - 1] = temp;
+    }
 
+    // Циклический сдвиг вправо элементов слево от максимального нечетного элемента
+    for (let i = maxOddIndex - 1; i >= 0; i--) {
+        const temp = arr[i];
+        arr[i] = arr[i + 1];
+        arr[i + 1] = temp;
+    }
+
+    return arr;
 }
 
 function func13()
